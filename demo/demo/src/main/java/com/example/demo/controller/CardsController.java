@@ -1,4 +1,4 @@
-package com.example.demo.controlle;
+package com.example.demo.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,11 +30,5 @@ public class CardsController {
 
         List<Map<String, Object>> list = List.of(card1,card2);
         return list;
-    }
-
-    //カード点数計算API
-    @GetMapping("/api/calc-score")
-    public List<String, Object> (){
-
     }
 }
