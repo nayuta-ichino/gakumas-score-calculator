@@ -1,0 +1,1 @@
+INSERT INTO plan_master (id, plan) VALUES (1, '制限なし'), (2, 'センス'), (3, 'ロジック'), (4, 'アノマリー');

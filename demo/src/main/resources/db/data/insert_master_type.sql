@@ -1,0 +1,1 @@
+INSERT INTO type_master (id, type) VALUES (1, 'ボーカル'),(2, 'ダンス'),(3, 'ビジュアル'),(4, 'アシスト');

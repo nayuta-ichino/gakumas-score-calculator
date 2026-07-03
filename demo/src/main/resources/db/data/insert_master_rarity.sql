@@ -1,0 +1,1 @@
+INSERT INTO rarity_master (id, rarity) VALUES (1, 'SSR'), (2, 'SR'), (3, 'R');

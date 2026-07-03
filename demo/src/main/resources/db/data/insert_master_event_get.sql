@@ -1,0 +1,1 @@
+INSERT INTO event_get_master (id, event_get) VALUES (1, 'スキルカード'), (2, 'Pアイテム');
