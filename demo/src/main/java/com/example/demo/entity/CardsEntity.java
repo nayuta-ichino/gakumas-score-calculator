@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "cards")
-public class Cards {
+public class CardsEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,9 +33,9 @@ public class Cards {
     @Column(name = "event_2_id")
     private Integer event2Id;
 
-    public Cards() {}
+    public CardsEntity() {}
 
-    public Cards(String name, String image, Integer rarityId, Integer typeId,
+    public CardsEntity(String name, String image, Integer rarityId, Integer typeId,
                  Integer planId, Integer eventGetId, Integer event1Id,
                  Integer event2Id) {
         this.name = name;

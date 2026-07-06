@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "card_score")
-public class CardScore {
+public class CardScoreEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,9 +23,9 @@ public class CardScore {
     @Column(name = "limit_score", nullable = false)
     private Integer limitScore;
     
-    public CardScore() {}
+    public CardScoreEntity() {}
 
-    public CardScore(Integer cardId, Integer limitScore, Integer score) {
+    public CardScoreEntity(Integer cardId, Integer limitScore, Integer score) {
         this.cardId = cardId;
         this.limitScore = limitScore;
         this.score = score;

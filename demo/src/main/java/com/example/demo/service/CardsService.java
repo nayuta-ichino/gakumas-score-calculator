@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.FormationRequestDTO;
 import com.example.demo.dto.FormationResponseDTO;
-import com.example.demo.entity.Cards;
+import com.example.demo.entity.CardsEntity;
 import com.example.demo.repository.CardsRepository;
 
 @Service
@@ -19,13 +19,13 @@ public class CardsService {
     }  
 
     //全件取得API
-    public List<Cards> findAll() {
+    public List<CardsEntity> findAll() {
         return cardsRepository.findAll();
     }
 
     //サポートカード編成API
     public FormationResponseDTO getFormation(FormationRequestDTO requestDto) {
-        List<Cards> entity = cardsRepository.findAllById(requestDto.getSlotList());
+        List<CardsEntity> entity = cardsRepository.findAllById(requestDto.getSlotList());
         return new FormationResponseDTO(entity);
     }
 }

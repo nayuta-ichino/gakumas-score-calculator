@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.FormationRequestDTO;
 import com.example.demo.dto.FormationResponseDTO;
-import com.example.demo.entity.Cards;
+import com.example.demo.entity.CardsEntity;
 import com.example.demo.service.CardsService;
 
 @RestController
@@ -25,7 +25,7 @@ public class CardsController {
 
     //全件取得API
     @GetMapping("/api/cards")
-    public List<Cards> getCards() {
+    public List<CardsEntity> getCards() {
         return cardsService.findAll();
     }
 
