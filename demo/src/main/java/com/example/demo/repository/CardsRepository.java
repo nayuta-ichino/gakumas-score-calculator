@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.entity.Cards;
 
 @Repository
-public interface CardsRepository extends JpaRepository<Cards, Long>{
+public interface CardsRepository extends JpaRepository<Cards, Integer> {
     
 }
