@@ -33,14 +33,11 @@ public class Cards {
     @Column(name = "event_2_id")
     private Integer event2Id;
 
-    @Column(name = "limit_break", nullable = false)
-    private Integer limitBreak;
-
     public Cards() {}
 
     public Cards(String name, String image, Integer rarityId, Integer typeId,
                  Integer planId, Integer eventGetId, Integer event1Id,
-                 Integer event2Id, Integer limitBreak) {
+                 Integer event2Id) {
         this.name = name;
         this.image = image;
         this.rarityId = rarityId;
@@ -49,7 +46,6 @@ public class Cards {
         this.eventGetId = eventGetId;
         this.event1Id = event1Id;
         this.event2Id = event2Id;
-        this.limitBreak = limitBreak;
     }
 
     // --- Getter ---
@@ -62,7 +58,6 @@ public class Cards {
     public Integer getEventGetId() { return eventGetId; }
     public Integer getEvent1Id() { return event1Id; }
     public Integer getEvent2Id() { return event2Id; }
-    public Integer getLimitBreak() { return limitBreak; }
 
     // --- Setter ---
     public void setName(String name) { this.name = name; }
@@ -73,6 +68,5 @@ public class Cards {
     public void setEventGetId(Integer eventGetId) { this.eventGetId = eventGetId; }
     public void setEvent1Id(Integer event1Id) { this.event1Id = event1Id; }
     public void setEvent2Id(Integer event2Id) { this.event2Id = event2Id; }
-    public void setLimitBreak(Integer limitBreak) { this.limitBreak = limitBreak; }
 }
 

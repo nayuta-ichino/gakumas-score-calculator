@@ -33,7 +33,6 @@ CREATE TABLE cards (
     event_get_id INT NOT NULL,
     event_1_id INT NULL,
     event_2_id INT NULL,
-    limit_break INT NOT NULL,
 
     FOREIGN KEY (rarity_id) REFERENCES rarity_master(id),
     FOREIGN KEY (type_id) REFERENCES type_master(id),
@@ -46,8 +45,8 @@ CREATE TABLE cards (
 CREATE TABLE card_score (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     card_id BIGINT NOT NULL,
-    limit_break INT NOT NULL,
     score INT NOT NULL,
+    limit_score INT NOT NULL
 
     FOREIGN KEY (card_id) REFERENCES cards(id)
 );

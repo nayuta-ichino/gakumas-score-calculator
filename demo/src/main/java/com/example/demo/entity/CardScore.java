@@ -17,28 +17,28 @@ public class CardScore {
     @Column(name = "card_id", nullable =false)
     private Integer cardId;
 
-    @Column(name = "limit_break", nullable = false)
-    private Integer limitBreak;
-
     @Column(nullable = false)
     private Integer score;
 
+    @Column(name = "limit_score", nullable = false)
+    private Integer limitScore;
+    
     public CardScore() {}
 
-    public CardScore(Integer cardId, Integer limitBreak, Integer score) {
+    public CardScore(Integer cardId, Integer limitScore, Integer score) {
         this.cardId = cardId;
-        this.limitBreak = limitBreak;
+        this.limitScore = limitScore;
         this.score = score;
     }
 
     // --- Getter ---
     public Long getId() { return id;}
     public Integer getCardId() { return cardId; }
-    public Integer getLimitBreak() { return limitBreak; }
+    public Integer getLimitScore() { return limitScore; }
     public Integer getScore() { return score; }
 
     // --- Setter ---
     public void setCardId(Integer cardId) { this.cardId = cardId; }
-    public void setLimitBreak(Integer limitBreak) { this.limitBreak = limitBreak; }
+    public void setLimitScore(Integer limitScore) { this.limitScore = limitScore; }
     public void setScore(Integer score) { this.score = score; }
 }
