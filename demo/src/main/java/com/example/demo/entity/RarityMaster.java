@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "rarity_master")
 public class RarityMaster {
-
     @Id
     private Integer id;
 
