@@ -26,8 +26,6 @@ public class CalcRequestDTO {
         private int limitBreakCount; //凸数
     }
 
-    
-
     private supportCardInfomation slot1;
     private supportCardInfomation slot2;
     private supportCardInfomation slot3;

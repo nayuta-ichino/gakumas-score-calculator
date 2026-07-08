@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.CardsResponseDto;
 import com.example.demo.dto.FormationRequestDTO;
 import com.example.demo.dto.FormationResponseDTO;
 import com.example.demo.entity.CardsEntity;
@@ -33,5 +34,11 @@ public class CardsController {
     @PostMapping("/api/formation")
     public FormationResponseDTO getFormation(@RequestBody FormationRequestDTO requestDto) {
         return cardsService.getFormation(requestDto);
+    }
+
+    //全件取得API(rarity_master,type_master,plan_master,event_get_master,event_master 連携)
+    @GetMapping("/api/cards/detail")
+    public List<CardsResponseDto> getCardsDetail(){
+        return cardsService.findAllDetail();
     }
 }
