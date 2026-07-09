@@ -24,3 +24,11 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.clip-slash {
+    clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);
+}
+
+.clip-middle-half {
+    clip-path: inset(5% 0 5% 0);
+}

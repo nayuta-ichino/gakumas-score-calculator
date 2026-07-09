@@ -13,6 +13,7 @@ type Card = {
   eventGetName: string;
   eventName1: string;
   eventName2: string;
+  attribute: string
 };
 
 export default function SupportCardsPage() {
@@ -44,7 +45,7 @@ export default function SupportCardsPage() {
   const selectCard = (card: Card) => {
     if (!slot) return;
     router.push(
-      `/formation?slot=${slot}&id=${card.id}&limitBreakCount=0&image=${card.image}&name=${card.name}`
+      `/formation?slot=${slot}&id=${card.id}&limitBreakCount=0&image=${card.image}&name=${card.name}&attribute=${card.attribute}`
     );
   };
 
@@ -127,10 +128,10 @@ export default function SupportCardsPage() {
             key={card.id}
             onClick={() => selectCard(card)}
             className={`
-    cursor-pointer border-2 rounded-xl shadow-sm transition-transform duration-200
-    hover:scale-[1.03] hover:shadow-lg p-3
-    ${getTypeBorder(card.typeName)}
-  `}
+              cursor-pointer border-2 rounded-xl shadow-sm transition-transform duration-200
+              hover:scale-[1.03] hover:shadow-lg p-3
+              ${getTypeBorder(card.typeName)}
+            `}
           >
 
             {/* カード画像（カード名を重ねる） */}
@@ -143,16 +144,14 @@ export default function SupportCardsPage() {
 
               {/* カード名（画像に重ねる） */}
               <div className="
-    absolute bottom-0 left-0 right-0
-    bg-black/60 text-white text-xs font-bold
-    px-2 py-1 rounded-b-lg
-    text-center
-  ">
+                absolute bottom-0 left-0 right-0
+                bg-black/60 text-white text-xs font-bold
+                px-2 py-1 rounded-b-lg
+                text-center
+              ">
                 {card.name}
               </div>
             </div>
-
-
 
             {/* 基本情報 */}
             <div className="mt-3">
@@ -165,9 +164,9 @@ export default function SupportCardsPage() {
                     alt={card.rarityName}
                   />
                   <span className="
-        absolute left-1/2 -translate-x-1/2 mt-2 px-2 py-1 text-xs bg-black text-white rounded
-        opacity-0 group-hover:opacity-100 transition whitespace-nowrap
-      ">
+                    absolute left-1/2 -translate-x-1/2 mt-2 px-2 py-1 text-xs bg-black text-white rounded
+                    opacity-0 group-hover:opacity-100 transition whitespace-nowrap
+                  ">
                     {card.rarityName}
                   </span>
                 </div>
@@ -180,9 +179,9 @@ export default function SupportCardsPage() {
                     alt={card.typeName}
                   />
                   <span className="
-        absolute left-1/2 -translate-x-1/2 mt-2 px-2 py-1 text-xs bg-black text-white rounded
-        opacity-0 group-hover:opacity-100 transition whitespace-nowrap
-      ">
+                    absolute left-1/2 -translate-x-1/2 mt-2 px-2 py-1 text-xs bg-black text-white rounded
+                    opacity-0 group-hover:opacity-100 transition whitespace-nowrap
+                  ">
                     {card.typeName}
                   </span>
                 </div>
@@ -195,9 +194,9 @@ export default function SupportCardsPage() {
                     alt={card.planName}
                   />
                   <span className="
-        absolute left-1/2 -translate-x-1/2 mt-2 px-2 py-1 text-xs bg-black text-white rounded
-        opacity-0 group-hover:opacity-100 transition whitespace-nowrap
-      ">
+                    absolute left-1/2 -translate-x-1/2 mt-2 px-2 py-1 text-xs bg-black text-white rounded
+                    opacity-0 group-hover:opacity-100 transition whitespace-nowrap
+                  ">
                     {card.planName}
                   </span>
                 </div>
@@ -219,9 +218,9 @@ export default function SupportCardsPage() {
                       alt={card.eventGetName}
                     />
                     <span className="
-          absolute left-1/2 -translate-x-1/2 mt-2 px-2 py-1 text-xs bg-black text-white rounded
-          opacity-0 group-hover:opacity-100 transition whitespace-nowrap
-        ">
+                      absolute left-1/2 -translate-x-1/2 mt-2 px-2 py-1 text-xs bg-black text-white rounded
+                      opacity-0 group-hover:opacity-100 transition whitespace-nowrap
+                    ">
                       {card.eventGetName}
                     </span>
                   </div>
@@ -241,9 +240,9 @@ export default function SupportCardsPage() {
                       alt={card.eventName1}
                     />
                     <span className="
-          absolute left-1/2 -translate-x-1/2 mt-2 px-2 py-1 text-xs bg-black text-white rounded
-          opacity-0 group-hover:opacity-100 transition whitespace-nowrap
-        ">
+                      absolute left-1/2 -translate-x-1/2 mt-2 px-2 py-1 text-xs bg-black text-white rounded
+                      opacity-0 group-hover:opacity-100 transition whitespace-nowrap
+                    ">
                       {card.eventName1}
                     </span>
                   </div>
@@ -255,23 +254,17 @@ export default function SupportCardsPage() {
                       alt={card.eventName2}
                     />
                     <span className="
-          absolute left-1/2 -translate-x-1/2 mt-2 px-2 py-1 text-xs bg-black text-white rounded
-          opacity-0 group-hover:opacity-100 transition whitespace-nowrap
-        ">
+                      absolute left-1/2 -translate-x-1/2 mt-2 px-2 py-1 text-xs bg-black text-white rounded
+                      opacity-0 group-hover:opacity-100 transition whitespace-nowrap
+                    ">
                       {card.eventName2}
                     </span>
                   </div>
 
                 </div>
               </div>
-
             </div>
-
-
-
-
           </div>
-
         ))}
       </div>
     </main>
