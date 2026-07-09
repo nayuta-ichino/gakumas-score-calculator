@@ -154,7 +154,24 @@ export default function FormationPage() {
         setSelectedActions({});
         localStorage.removeItem("selectedActions");
     };
-    
+
+    // =========================
+    // 現在のシナリオ（初 / NIA / HIF）
+    // =========================
+    const [scenario, setScenario] = useState("初");
+
+    // =========================
+    // スケジュール管理（大分類）
+    // =========================
+    const [openScenario, setOpenScenario] = useState("");
+
+    const changeScenario = (scenarioName: string) => {
+        setScenario(scenarioName);
+        setOpenScenario("");
+    };
+
+
+
     // =========================
     // 行動選択
     // =========================
@@ -213,19 +230,36 @@ export default function FormationPage() {
                         <div
                             key={index}
                             className="border rounded-lg bg-white shadow-md hover:shadow-lg transition 
-                         flex flex-col items-center justify-center
-                         h-56 w-[240px] p-2"
+                            flex flex-col items-center justify-center
+                            h-40 w-[240px] p-2 relative"
                         >
                             {slot.id !== 0 ? (
                                 <div className="flex flex-col items-center justify-center h-full w-full">
 
-                                    <img
-                                        src={slot.image}
-                                        alt=""
-                                        className="max-h-full max-w-full object-contain mb-2"
-                                    />
+                                    {/* ▼ Slot カード（一覧画面と同じデザイン＋高さ縮小＋画像クリックで変更） */}
+                                    <div
+                                        className="relative w-full h-20 cursor-pointer border-2 rounded-xl shadow-sm hover:shadow-lg transition"
+                                        onClick={() => router.push(`/support-cards?slot=${index + 1}`)}
+                                    >
+                                        {/* カード画像 */}
+                                        <img
+                                            src={slot.image}
+                                            alt={slot.name}
+                                            className="w-full h-full object-cover rounded-xl object-[center_40%]"
+                                        />
 
-                                    <div className="flex gap-1 justify-center mb-2">
+                                        {/* カード名（画像に重ねる） */}
+                                        <div className="
+                                            absolute bottom-0 left-0 right-0
+                                            bg-black/60 text-white text-xs font-bold
+                                            px-2 py-1 rounded-b-xl text-center
+                                        ">
+                                            {slot.name}
+                                        </div>
+                                    </div>
+
+                                    {/* ▼ 凸ボタン（画像と重ならないように mt-3） */}
+                                    <div className="mt-3 flex gap-1 justify-center">
                                         {[0, 1, 2, 3, 4].map((lv) => (
                                             <button
                                                 key={lv}
@@ -250,12 +284,6 @@ export default function FormationPage() {
                                         ))}
                                     </div>
 
-                                    <button
-                                        className="px-3 py-1 bg-gray-300 rounded hover:bg-gray-400 transition"
-                                        onClick={() => router.push(`/support-cards?slot=${index + 1}`)}
-                                    >
-                                        変更する
-                                    </button>
                                 </div>
                             ) : (
                                 <button
@@ -265,6 +293,31 @@ export default function FormationPage() {
                                     ＋
                                 </button>
                             )}
+
+                            {/* × ボタン（右上に配置） */}
+                            <button
+                                className="
+                                    absolute top-1 right-1
+                                    w-6 h-6 flex items-center justify-center
+                                    bg-red-500 text-white rounded-full
+                                    hover:bg-red-600 transition
+                                "
+                                onClick={() => {
+                                    setSlots((prev) => {
+                                        const newSlots = [...prev];
+                                        newSlots[index] = {
+                                            id: 0,
+                                            image: "",
+                                            name: "",
+                                            limitBreakCount: 0,
+                                        };
+                                        localStorage.setItem("formationSlots", JSON.stringify(newSlots));
+                                        return newSlots;
+                                    });
+                                }}
+                            >
+                                ×
+                            </button>
                         </div>
                     ))}
                 </div>
@@ -272,7 +325,6 @@ export default function FormationPage() {
 
             {/* 中央：スケジュール */}
             <div className="basis-[30%] min-w-[380px]">
-
                 {/* スケジュールクリアボタン */}
                 <button
                     onClick={clearSchedule}
@@ -280,14 +332,98 @@ export default function FormationPage() {
                 >
                     スケジュールをクリアする
                 </button>
-
                 <h2 className="text-2xl font-bold mb-4">スケジュール</h2>
+                <div className="flex gap-4 mb-4">
 
-                <div className="flex gap-2 mb-4">
-                    <button className="px-4 py-2 bg-gray-300 text-gray-500 rounded cursor-not-allowed">初</button>
-                    <button className="px-4 py-2 bg-gray-300 text-gray-500 rounded cursor-not-allowed">NIA</button>
-                    <button className="px-4 py-2 bg-blue-500 text-white rounded">HIF</button>
+                    {/* 初 */}
+                    <div
+                        className="relative"
+                        onMouseEnter={() => setOpenScenario("初")}
+                        onMouseLeave={() => setOpenScenario("")}
+                    >
+                        <button className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">
+                            初
+                        </button>
+
+                        {openScenario === "初" && (
+                            <div className="
+                                absolute left-0 mt-0.5 bg-white border rounded shadow 
+                                p-2 flex flex-row gap-2 w-max min-w-[120px] z-50
+                            ">
+                                <button className="px-3 py-1 bg-blue-100 rounded hover:bg-blue-200">
+                                    レギュラー
+                                </button>
+                                <button className="px-3 py-1 bg-blue-100 rounded hover:bg-blue-200">
+                                    プロ
+                                </button>
+                                <button className="px-3 py-1 bg-blue-100 rounded hover:bg-blue-200">
+                                    マスター
+                                </button>
+                                <button className="px-3 py-1 bg-blue-100 rounded hover:bg-blue-200">
+                                    レジェンド
+                                </button>
+                            </div>
+                        )}
+                    </div>
+
+
+                    {/* NIA */}
+                    <div
+                        className="relative"
+                        onMouseEnter={() => setOpenScenario("NIA")}
+                        onMouseLeave={() => setOpenScenario("")}
+                    >
+                        <button className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">
+                            NIA
+                        </button>
+
+                        {openScenario === "NIA" && (
+                            <div className="
+                                absolute left-0 mt-0.5 bg-white border rounded shadow 
+                                p-2 flex flex-row gap-2 w-max min-w-[120px] z-50
+                            ">
+                                <button className="px-3 py-1 bg-blue-100 rounded hover:bg-blue-200">
+                                    プロ
+                                </button>
+                                <button className="px-3 py-1 bg-blue-100 rounded hover:bg-blue-200">
+                                    マスター
+                                </button>
+
+                            </div>
+                        )}
+                    </div>
+
+                    {/* HIF（中分類なし） */}
+                        <button className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">
+                            HIF
+                        </button>
+                    {/* <div
+                        className="relative"
+                        onMouseEnter={() => setOpenScenario("HIF")}
+                        onMouseLeave={() => setOpenScenario("")}
+                    >
+                        <button className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">
+                            HIF
+                        </button>
+
+                        {openScenario === "HIF" && (
+                            <div className="
+                                absolute left-0 mt-0.5 bg-white border rounded shadow 
+                                p-2 flex flex-row gap-2 w-max min-w-[120px] z-50
+                            ">
+                                <button className="px-3 py-1 bg-blue-100 rounded hover:bg-blue-200">
+                                    プロ
+                                </button>
+                                <button className="px-3 py-1 bg-blue-100 rounded hover:bg-blue-200">
+                                    マスター
+                                </button>
+
+                            </div>
+                        )}
+                    </div> */}
+
                 </div>
+
 
                 <div className="h-[70vh] overflow-y-scroll border rounded-xl p-5 bg-gray-50 shadow-lg w-full">
 
@@ -313,7 +449,7 @@ export default function FormationPage() {
                                     </div>
                                 ) : (
                                     <div className="flex items-center">
-                                        <div className="w-24 font-bold text-xl">{row.day}</div>
+                                        <div className="w-17 font-bold text-xl">{row.day}</div>
                                         <div className="grid grid-cols-3 gap-3">
                                             {paddedIcons.map((icon, i) => (
                                                 <div key={`${icon}-${i}`} className="relative">
@@ -363,7 +499,7 @@ export default function FormationPage() {
                             <div key={idx} className="mb-3">
                                 {isWideRow(row.day) ? (
                                     <div className="flex items-start gap-3 w-full">
-                                        <div className="w-24 font-bold text-xl">{row.day}</div>
+                                        <div className="w-17 font-bold text-xl">{row.day}</div>
 
                                         <div className="flex-1 flex flex-col gap-2">
                                             {row.icons.map((icon) => (
@@ -380,34 +516,45 @@ export default function FormationPage() {
                                     <div className="flex items-center">
                                         <div className="w-24 font-bold text-xl">{row.day}</div>
                                         <div className="grid grid-cols-3 gap-3">
-                                            {paddedIcons.map((icon, i) => (
-                                                <div key={`${icon}-${i}`} className="relative">
-                                                    {icon === "None" ? (
-                                                        <div className="w-13 h-13 opacity-20 border border-gray-300 rounded-lg"></div>
-                                                    ) : (
-                                                        <>
-                                                            <img
-                                                                src={iconPath(icon)}
-                                                                className={`cursor-pointer ${selectedActions[row.day] === icon
-                                                                    ? ""
-                                                                    : "opacity-40"
-                                                                    } ${["Selection1", "Selection2", "Selection3", "Round1", "Round2", "Interval"].includes(icon)
-                                                                        ? "w-10 h-10"
-                                                                        : "w-13 h-13"
-                                                                    }`}
-                                                                onClick={() => handleSelectAction(row.day, icon)}
-                                                                alt=""
-                                                            />
+                                            {paddedIcons.map((icon, i) => {
+                                                const selected = selectedActions[row.day] === icon;
 
-                                                            {selectedActions[row.day] === icon && (
-                                                                <span className="absolute top-0 right-0 text-blue-600 text-xl font-bold">
-                                                                    ☑
-                                                                </span>
-                                                            )}
-                                                        </>
-                                                    )}
-                                                </div>
-                                            ))}
+                                                return (
+                                                    <div
+                                                        key={`${icon}-${i}`}
+                                                        className={`
+                                                            relative p-1 rounded cursor-pointer transition
+                                                            ${selected ? "scale-110 border-2 border-blue-500 bg-blue-100" : ""}
+                                                        `}
+                                                        onClick={() => handleSelectAction(row.day, icon)}
+                                                    >
+                                                        {icon === "None" ? (
+                                                            <div className="w-13 h-13 opacity-20 border border-gray-300 rounded-lg"></div>
+                                                        ) : (
+                                                            <>
+                                                                <img
+                                                                    src={iconPath(icon)}
+                                                                    className={`
+                                                                            ${selected ? "" : "opacity-40"}
+                                                                            ${["Selection1", "Selection2", "Selection3", "Round1", "Round2", "Interval"].includes(icon)
+                                                                            ? "w-10 h-10"
+                                                                            : "w-13 h-13"
+                                                                        }
+                                                                    `}
+                                                                    alt=""
+                                                                />
+
+                                                                {selected && (
+                                                                    <span className="absolute top-0 right-0 text-blue-600 text-xl font-bold">
+                                                                        ☑
+                                                                    </span>
+                                                                )}
+                                                            </>
+                                                        )}
+                                                    </div>
+                                                );
+                                            })}
+
                                         </div>
                                     </div>
                                 )}
