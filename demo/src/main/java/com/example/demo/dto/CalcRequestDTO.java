@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CalcRequestDTO {
 
-    //インナークラス
+    //インナークラス サポートカード編成
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
@@ -24,6 +24,56 @@ public class CalcRequestDTO {
         @Min(0)
         @Max(4)
         private int limitBreakCount; //凸数
+    }
+    
+    //インナークラス スケジュール
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class scheduleInfomation{
+        private Integer ClassDance;
+        private Integer ClassVisual;
+        private Integer ClassVocal;
+        private Integer LessonDance;
+        private Integer LessonVisual;
+        private Integer LessonVocal;
+        private Integer Consultation; //相談
+        private Integer Gifts; //差し入れ
+        private Integer GoingOut; //おでかけ
+        private Integer SpecialInstruction; //特別指導
+    }
+
+    //インナークラス ユーザー入力欄
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class userInputInfomation{
+        // スキルカード獲得時（500番台）
+        private Integer mentalGet;
+        private Integer activeGet;
+        private Integer skillSSRGet;
+        private Integer goodGet;
+        private Integer focusGet;
+        private Integer genkiGet;
+        private Integer impressionGet;
+        private Integer onzonGet;
+        // 獲得時（600番台）
+        private Integer pItemGet;
+        private Integer pDrinkGet;
+        // 強化時（700番台）
+        private Integer skillUp;
+        private Integer activeUp;
+        private Integer mentalUp;
+        // 削除時（800番台）
+        private Integer skillDel;
+        private Integer activeDel;
+        private Integer mentalDel;
+        // カスタム（1100番台）
+        private Integer skillCustom;
+        // チェンジ時（1200番台）
+        private Integer skillChange;
+        // 交換後（1300番台）
+        private Integer pDrinkTradeAfter;
     }
 
     private supportCardInfomation slot1;
@@ -46,4 +96,6 @@ public class CalcRequestDTO {
             .map(slot -> slot != null ? slot.getLimitBreakCount() : 0)
             .toList();
     }
+
+
 }
