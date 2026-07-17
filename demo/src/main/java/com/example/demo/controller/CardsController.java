@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.CalcRequestDTO;
+import com.example.demo.dto.CalcResponseDTO;
 import com.example.demo.dto.CardsResponseDto;
 import com.example.demo.dto.FormationRequestDTO;
 import com.example.demo.dto.FormationResponseDTO;
@@ -19,26 +21,32 @@ import com.example.demo.service.CardsService;
 public class CardsController {
     private final CardsService cardsService;
 
-    //コンストラクタ
+    // コンストラクタ
     public CardsController(CardsService cardsService) {
         this.cardsService = cardsService;
     }
 
-    //全件取得API
+    // 全件取得API
     @GetMapping("/api/cards")
     public List<CardsEntity> getCards() {
         return cardsService.findAll();
     }
 
-    //サポートカード編成API
+    // サポートカード編成API
     @PostMapping("/api/formation")
     public FormationResponseDTO getFormation(@RequestBody FormationRequestDTO requestDto) {
         return cardsService.getFormation(requestDto);
     }
 
-    //全件取得API(rarity_master,type_master,plan_master,event_get_master,event_master 連携)
+    // 全件取得API(rarity_master,type_master,plan_master,event_get_master,event_master連携)
     @GetMapping("/api/cards/detail")
-    public List<CardsResponseDto> getCardsDetail(){
+    public List<CardsResponseDto> getCardsDetail() {
         return cardsService.findAllDetail();
+    }
+
+    // サポートカード点数計算API
+    @PostMapping("/api/calculation/totalscore")
+    public CalcResponseDTO getFormationTotalScore(@RequestBody CalcRequestDTO calcRequestDTO){
+        return cardsService.getFormationTotalScore(calcRequestDTO);
     }
 }

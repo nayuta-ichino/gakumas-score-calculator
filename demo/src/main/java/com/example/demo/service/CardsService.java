@@ -53,8 +53,9 @@ public class CardsService {
         return cardsList.stream().map(CardsResponseDto::fromEntity).toList();
     }
 
-    // サポートカードアビリティと上昇値を取得(cards,limit_break_master連携)
-    public CalcResponseDTO find(CalcRequestDTO calcRequestDTO) {
+    // サポートカード点数計算API
+    public CalcResponseDTO getFormationTotalScore(CalcRequestDTO calcRequestDTO) {
+        // サポートカードアビリティと上昇値を取得(cards,limit_break_master連携)
         List<SQLResultInfomationProjection> projections = cardsJdbcRepository
                 .cardsValueInfomation(calcRequestDTO.getIdList());
 
