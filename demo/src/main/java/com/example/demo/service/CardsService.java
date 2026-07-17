@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.domain.CardScore;
@@ -25,6 +27,7 @@ public class CardsService {
     private final CardsRepository cardsRepository;
     private final CardsJdbcRepository cardsJdbcRepository;
     private final CardScore cardScore;
+    private static final Logger log = LoggerFactory.getLogger(CardsService.class);
 
     // コンストラクタ
     public CardsService(CardsRepository cardsRepository, CardsJdbcRepository cardsJdbcRepository, CardScore cardScore) {
@@ -56,8 +59,15 @@ public class CardsService {
     // サポートカード点数計算API
     public CalcResponseDTO getFormationTotalScore(CalcRequestDTO calcRequestDTO) {
         // サポートカードアビリティと上昇値を取得(cards,limit_break_master連携)
-        List<SQLResultInfomationProjection> projections = cardsJdbcRepository
-                .cardsValueInfomation(calcRequestDTO.getIdList());
+        List<SQLResultInfomationProjection> projections = new ArrayList<>();
+        try {
+            projections = cardsJdbcRepository.cardsValueInfomation(calcRequestDTO.getIdList());
+        } catch (Exception e) {
+            log.error("DB取得時にエラーが起きました。", e);
+            throw new RuntimeException("DB取得時にエラーが起きました。", e);
+        } finally {
+            log.info("cardsValueInfomation を実行しました。"); 
+        }
 
         // DBから取得したデータを多重MAP化
         Map<Integer, Map<Integer, Map<String, Double>>> ids = projections.stream()
@@ -96,10 +106,14 @@ public class CardsService {
             }
         }
 
+        if(calcMap.isEmpty()){
+            throw new IllegalArgumentException("計算対象のアビリティが存在しません");
+        }
+
         // スケジュール
-        CalcRequestDTO.scheduleInfomation scheduleDTO = calcRequestDTO.getSchedule();
+        CalcRequestDTO.ScheduleInfomation scheduleDTO = calcRequestDTO.getScheduleInfomation();
         // ユーザー入力欄
-        CalcRequestDTO.userInputInfomation userInputDTO = calcRequestDTO.getUserInput();
+        CalcRequestDTO.UserInputInfomation userInputDTO = calcRequestDTO.getUserInputInfomation();
 
         CalcResponseDTO dto = new CalcResponseDTO();
         dto.setTotalScore(cardScore.calculationCardScore(calcMap, scheduleDTO, userInputDTO));

@@ -30,7 +30,7 @@ public class CalcRequestDTO {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class scheduleInfomation{
+    public static class ScheduleInfomation{
         private Integer classDance;
         private Integer classVisual;
         private Integer classVocal;
@@ -49,7 +49,7 @@ public class CalcRequestDTO {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class userInputInfomation{
+    public static class UserInputInfomation{
         // スキルカード獲得時（500番台）
         private Integer mentalGet;
         private Integer activeGet;
@@ -60,8 +60,8 @@ public class CalcRequestDTO {
         private Integer impressionGet;
         private Integer coolDownGet;
         // 獲得時（600番台）
-        private Integer pItemGet;
-        private Integer pDrinkGet;
+        private Integer produceItemGet;
+        private Integer produceDrinkGet;
         // 強化時（700番台）
         //private Integer skillUp; activeUp + mentalUp でOK
         private Integer activeUp;
@@ -75,7 +75,7 @@ public class CalcRequestDTO {
         // チェンジ時（1200番台）
         private Integer skillChange;
         // 交換後（1300番台）
-        private Integer pDrinkTradeAfter;
+        private Integer produceDrinkTradeAfter;
     }
 
     private supportCardInfomation slot1;
@@ -100,6 +100,6 @@ public class CalcRequestDTO {
     }
 
     // 呼び出し用
-    private scheduleInfomation schedule;
-    private userInputInfomation userInput;
+    private ScheduleInfomation scheduleInfomation;
+    private UserInputInfomation userInputInfomation;
 }
