@@ -12,10 +12,64 @@ import NIAMasterSchedule from "./schedule/NIAMasterSchedule";
 
 import HIFSchedule from "./schedule/HIFSchedule";
 
-export default function FormationPage() {
+export default function Schedule({
+        setScheduleInfo,
+    }: {
+        setScheduleInfo: (info: any) => void;
+    }) {
+
 
     const [selectedActions, setSelectedActions] = useState<Record<string, string>>({});
     const iconPath = (name: string) => `/schedule-icons/${name}.png`;
+
+    // ★ 初期化用オブジェクト（useEffect より前に置く）
+    const defaultCounts = {
+        classDance: 0,
+        classVisual: 0,
+        classVocal: 0,
+        lessonDance: 0,
+        lessonVisual: 0,
+        lessonVocal: 0,
+        consultation: 0,
+        gifts: 0,
+        goingOut: 0,
+        specialInstruction: 0,
+        audition: 0,
+        rest: 0,
+    };
+
+    // ★ selectedActions が変わるたびに FormationPage に集計結果を渡す
+    useEffect(() => {
+        // アイコン名 → scheduleInfo のキーへの対応表
+        const mapping: Record<string, keyof typeof defaultCounts> = {
+            ClassDance: "classDance",
+            ClassVisual: "classVisual",
+            ClassVocal: "classVocal",
+            LessonDance: "lessonDance",
+            LessonVisual: "lessonVisual",
+            LessonVocal: "lessonVocal",
+            Consultation: "consultation",
+            Gifts: "gifts",
+            GoingOut: "goingOut",
+            SpecialInstruction: "specialInstruction",
+            Audition: "audition",
+            Rest: "rest",
+        };
+
+        // 初期化
+        const counts = { ...defaultCounts };
+
+        // selectedActions を集計
+        Object.values(selectedActions).forEach(icon => {
+            const key = mapping[icon];
+            if (key) counts[key] += 1;
+        });
+
+        // FormationPage に渡す
+        setScheduleInfo(counts);
+
+    }, [selectedActions]);
+
 
     // =========================
     // スケジュールクリア

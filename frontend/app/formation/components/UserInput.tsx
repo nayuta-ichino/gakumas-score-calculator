@@ -2,8 +2,15 @@
 
 import { useState } from "react";
 
-export default function UserInput() {
-
+export default function UserInput({
+  setTotalScore,
+  formationSlots,
+  scheduleInfo,
+}: {
+  setTotalScore: (score: number) => void;
+  formationSlots: any;
+  scheduleInfo: any;
+}) {
     // 汎用カウンター
     const Counter = ({ label, value, setValue }: {
         label: string;
@@ -61,13 +68,13 @@ export default function UserInput() {
     const [skillSSRGet, setSkillSSRGet] = useState(0);
     const [goodGet, setGoodGet] = useState(0);
     const [focusGet, setFocusGet] = useState(0);
-    const [genkiGet, setGenkiGet] = useState(0);
+    const [powerGet, setPowerGet] = useState(0);
     const [impressionGet, setImpressionGet] = useState(0);
-    const [onzonGet, setOnzonGet] = useState(0);
+    const [coolDownGet, setCoolDownGet] = useState(0);
 
     // 獲得時（600番台）
-    const [pItemGet, setPItemGet] = useState(0);
-    const [pDrinkGet, setPDrinkGet] = useState(0);
+    const [pItemGet, setProduceItemGet] = useState(0);
+    const [pDrinkGet, setProduceDrinkGet] = useState(0);
 
     // 強化時（700番台）
     const [skillUp, setSkillUp] = useState(0);
@@ -86,7 +93,7 @@ export default function UserInput() {
     const [skillChange, setSkillChange] = useState(0);
 
     // 交換後（1300番台）
-    const [pDrinkTradeAfter, setPDrinkTradeAfter] = useState(0);
+    const [pDrinkTradeAfter, setProduceDrinkTradeAfter] = useState(0);
 
     return (
         <div className="basis-[15%] min-w-[260px] max-h-[90vh] overflow-y-scroll p-3">
@@ -99,15 +106,15 @@ export default function UserInput() {
                 <Counter label="スキル（SSR）" value={skillSSRGet} setValue={setSkillSSRGet} />
                 <Counter label="好調" value={goodGet} setValue={setGoodGet} />
                 <Counter label="集中" value={focusGet} setValue={setFocusGet} />
-                <Counter label="元気" value={genkiGet} setValue={setGenkiGet} />
+                <Counter label="元気" value={powerGet} setValue={setPowerGet} />
                 <Counter label="好印象" value={impressionGet} setValue={setImpressionGet} />
-                <Counter label="温存" value={onzonGet} setValue={setOnzonGet} />
+                <Counter label="温存" value={coolDownGet} setValue={setCoolDownGet} />
             </Accordion>
 
             {/* ■ 獲得 */}
             <Accordion title="■ 獲得">
-                <Counter label="Pアイテム" value={pItemGet} setValue={setPItemGet} />
-                <Counter label="Pドリンク" value={pDrinkGet} setValue={setPDrinkGet} />
+                <Counter label="Pアイテム" value={pItemGet} setValue={setProduceItemGet} />
+                <Counter label="Pドリンク" value={pDrinkGet} setValue={setProduceDrinkGet} />
             </Accordion>
 
             {/* ■ 強化 */}
@@ -136,9 +143,53 @@ export default function UserInput() {
 
             {/* ■ 交換 */}
             <Accordion title="■ 交換">
-                <Counter label="相談Pドリンク交換後" value={pDrinkTradeAfter} setValue={setPDrinkTradeAfter} />
+                <Counter label="相談Pドリンク交換後" value={pDrinkTradeAfter} setValue={setProduceDrinkTradeAfter} />
             </Accordion>
+
+            <button
+                onClick={async () => {
+                    console.log("formationSlots", formationSlots);
+                    const res = await fetch("http://localhost:8080/api/calculation/totalscore", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            ...formationSlots,
+                            scheduleInfomation: scheduleInfo,
+                            userInputInfomation: {
+                                mentalGet,
+                                activeGet,
+                                skillSSRGet,
+                                goodGet,
+                                focusGet,
+                                powerGet,
+                                impressionGet,
+                                coolDownGet,
+                                produceItemGet: pItemGet,
+                                produceDrinkGet: pDrinkGet,
+                                skillUp,
+                                activeUp,
+                                mentalUp,
+                                skillDel,
+                                activeDel,
+                                mentalDel,
+                                skillCustom,
+                                skillChange,
+                                produceDrinkTradeAfter: pDrinkTradeAfter,
+                            },
+                        }),
+                    });
+
+                    const data = await res.json();
+                    setTotalScore(data.totalScore);
+                }}
+                className="w-full mt-4 px-4 py-2 bg-indigo-600 text-white font-bold rounded-lg shadow hover:bg-indigo-700"
+            >
+                計算する
+            </button>
+
 
         </div>
     );
+
+
 }

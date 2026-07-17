@@ -12,15 +12,17 @@ type Slot = {
     attribute: "Vo" | "Da" | "Vi" | "";
 };
 
-export default function SupportFormation() {
+export default function SupportFormation({
+    setFormationSlots,
+}: {
+    setFormationSlots: (slots: any) => void;
+}) {
     const router = useRouter();
     const searchParams = useSearchParams();
 
     const [slots, setSlots] = useState<Slot[]>([]);
 
-    // =========================
-    // 初期ロード（編成枠）
-    // =========================
+    // ① 初期ロード：6枠を必ず用意する
     useEffect(() => {
         const saved = localStorage.getItem("formationSlots");
         if (saved) {
@@ -37,9 +39,7 @@ export default function SupportFormation() {
         }
     }, []);
 
-    // =========================
-    // カード選択反映（カード選択画面から戻ってきたとき）
-    // =========================
+    // ② カード選択画面から戻ってきたときに slots を更新する
     useEffect(() => {
         const slot = searchParams.get("slot");
         const id = searchParams.get("id");
@@ -49,7 +49,6 @@ export default function SupportFormation() {
         const rawAttr = searchParams.get("attribute");
         const attribute: "Vo" | "Da" | "Vi" | "" =
             rawAttr === "Vo" || rawAttr === "Da" || rawAttr === "Vi" ? rawAttr : "";
-
 
         if (slot && id && image && name) {
             setSlots((prev) => {
@@ -68,6 +67,18 @@ export default function SupportFormation() {
             });
         }
     }, [searchParams]);
+
+    // ③ slots が変わったら、formationSlots を親に渡す
+    useEffect(() => {
+        setFormationSlots({
+            slot1: { id: slots[0]?.id ?? 0, limitBreakCount: slots[0]?.limitBreakCount ?? 0 },
+            slot2: { id: slots[1]?.id ?? 0, limitBreakCount: slots[1]?.limitBreakCount ?? 0 },
+            slot3: { id: slots[2]?.id ?? 0, limitBreakCount: slots[2]?.limitBreakCount ?? 0 },
+            slot4: { id: slots[3]?.id ?? 0, limitBreakCount: slots[3]?.limitBreakCount ?? 0 },
+            slot5: { id: slots[4]?.id ?? 0, limitBreakCount: slots[4]?.limitBreakCount ?? 0 },
+            slot6: { id: slots[5]?.id ?? 0, limitBreakCount: slots[5]?.limitBreakCount ?? 0 },
+        });
+    }, [slots]);
 
     // =========================
     // 一括操作ボタン（編成枠）
@@ -172,11 +183,11 @@ export default function SupportFormation() {
                         <button
                             key={index}
                             className="
-                            border border-gray-300 rounded-xl shadow-md bg-white
-                            flex items-center justify-center
-                            h-40
-                            text-3xl font-bold text-blue-600 hover:text-blue-800 transition
-                        "
+                                border border-gray-300 rounded-xl shadow-md bg-white
+                                flex items-center justify-center
+                                h-40
+                                text-3xl font-bold text-blue-600 hover:text-blue-800 transition
+                            "
                             onClick={() => router.push(`/support-cards?slot=${index + 1}`)}
                         >
                             ＋
