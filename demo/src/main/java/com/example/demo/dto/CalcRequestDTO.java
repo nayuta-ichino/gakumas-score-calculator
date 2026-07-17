@@ -31,16 +31,18 @@ public class CalcRequestDTO {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class scheduleInfomation{
-        private Integer ClassDance;
-        private Integer ClassVisual;
-        private Integer ClassVocal;
-        private Integer LessonDance;
-        private Integer LessonVisual;
-        private Integer LessonVocal;
-        private Integer Consultation; //相談
-        private Integer Gifts; //差し入れ
-        private Integer GoingOut; //おでかけ
-        private Integer SpecialInstruction; //特別指導
+        private Integer classDance;
+        private Integer classVisual;
+        private Integer classVocal;
+        private Integer lessonDance;
+        private Integer lessonVisual;
+        private Integer lessonVocal;
+        private Integer consultation; //相談
+        private Integer gifts; //差し入れ
+        private Integer goingOut; //おでかけ
+        private Integer specialInstruction; //特別指導
+        private Integer audition; // 試験・オーディション
+        private Integer rest; // 休む
     }
 
     //インナークラス ユーザー入力欄
@@ -54,18 +56,18 @@ public class CalcRequestDTO {
         private Integer skillSSRGet;
         private Integer goodGet;
         private Integer focusGet;
-        private Integer genkiGet;
+        private Integer powerGet;
         private Integer impressionGet;
-        private Integer onzonGet;
+        private Integer coolDownGet;
         // 獲得時（600番台）
         private Integer pItemGet;
         private Integer pDrinkGet;
         // 強化時（700番台）
-        private Integer skillUp;
+        //private Integer skillUp; activeUp + mentalUp でOK
         private Integer activeUp;
         private Integer mentalUp;
         // 削除時（800番台）
-        private Integer skillDel;
+        //private Integer skillDel; activeDel + mentalDel でOK
         private Integer activeDel;
         private Integer mentalDel;
         // カスタム（1100番台）
@@ -97,5 +99,7 @@ public class CalcRequestDTO {
             .toList();
     }
 
-
+    // 呼び出し用
+    private scheduleInfomation schedule;
+    private userInputInfomation userInput;
 }
