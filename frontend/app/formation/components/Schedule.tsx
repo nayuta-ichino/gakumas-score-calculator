@@ -13,10 +13,10 @@ import NIAMasterSchedule from "./schedule/NIAMasterSchedule";
 import HIFSchedule from "./schedule/HIFSchedule";
 
 export default function Schedule({
-        setScheduleInfo,
-    }: {
-        setScheduleInfo: (info: any) => void;
-    }) {
+    setScheduleInfo,
+}: {
+    setScheduleInfo: (info: any) => void;
+}) {
 
 
     const [selectedActions, setSelectedActions] = useState<Record<string, string>>({});
@@ -141,11 +141,21 @@ export default function Schedule({
         if (icon === "None") return;
 
         setSelectedActions(prev => {
+            // ★ すでに同じアイコンが選ばれていたら「解除」
+            if (prev[day] === icon) {
+                const updated = { ...prev };
+                delete updated[day]; // ← 選択解除
+                localStorage.setItem("selectedActions", JSON.stringify(updated));
+                return updated;
+            }
+
+            // ★ 新しく選択
             const updated = { ...prev, [day]: icon };
             localStorage.setItem("selectedActions", JSON.stringify(updated));
             return updated;
         });
     };
+
 
 
     {/* スケジュール */ }
