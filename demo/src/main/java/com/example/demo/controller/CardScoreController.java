@@ -14,7 +14,7 @@ import jakarta.validation.Valid;
 @RestController
 @CrossOrigin(origins = {
     "http://localhost:3000",
-    "http://3.24.232.247:3000"
+    "http://13.238.116.102:3000"
 })
 
 public class CardScoreController {
