@@ -98,39 +98,39 @@ export default function Schedule({
     // スケジュールデータ
     // =========================
     const selectionPhase = [
-        { day: "1日", icons: ["Consultation", "Gifts", "SpecialInstruction"] },
-        { day: "2日", icons: ["LessonVocal", "LessonDance", "LessonVisual"] },
-        { day: "3日", icons: ["ClassVocal", "ClassDance", "ClassVisual"] },
-        { day: "4日", icons: ["LessonVocal", "LessonDance", "LessonVisual"] },
-        { day: "5日", icons: ["GoingOut", "Consultation"] },
-        { day: "6日", icons: ["ClassVocal", "ClassDance", "ClassVisual"] },
-        { day: "7日", icons: ["Selection1"] },
-        { day: "8日", icons: ["GoingOut", "Gifts"] },
-        { day: "9日", icons: ["LessonVocal", "LessonDance", "LessonVisual"] },
-        { day: "10日", icons: ["ClassVocal", "ClassDance", "ClassVisual"] },
-        { day: "11日", icons: ["LessonVocal", "LessonDance", "LessonVisual"] },
-        { day: "12日", icons: ["Consultation", "SpecialInstruction"] },
-        { day: "13日", icons: ["Selection2"] },
-        { day: "14日", icons: ["GoingOut", "Gifts"] },
-        { day: "15日", icons: ["LessonVocal", "LessonDance", "LessonVisual"] },
-        { day: "16日", icons: ["GoingOut", "Consultation", "Gifts"] },
-        { day: "17日", icons: ["ClassVocal", "ClassDance", "ClassVisual"] },
-        { day: "18日", icons: ["LessonVocal", "LessonDance", "LessonVisual"] },
-        { day: "19日", icons: ["Consultation", "SpecialInstruction"] },
-        { day: "20日", icons: ["Selection3"] },
+        { day: "S_1日", displayDay: "1日", icons: ["Consultation", "Gifts", "SpecialInstruction"] },
+        { day: "S_2日", displayDay: "2日", icons: ["LessonVocal", "LessonDance", "LessonVisual"] },
+        { day: "S_3日", displayDay: "3日", icons: ["ClassVocal", "ClassDance", "ClassVisual"] },
+        { day: "S_4日", displayDay: "4日", icons: ["LessonVocal", "LessonDance", "LessonVisual"] },
+        { day: "S_5日", displayDay: "5日", icons: ["GoingOut", "Consultation"] },
+        { day: "S_6日", displayDay: "6日", icons: ["ClassVocal", "ClassDance", "ClassVisual"] },
+        { day: "S_7日", displayDay: "7日", icons: ["Selection1"] },
+        { day: "S_8日", displayDay: "8日", icons: ["GoingOut", "Gifts"] },
+        { day: "S_9日", displayDay: "9日", icons: ["LessonVocal", "LessonDance", "LessonVisual"] },
+        { day: "S_10日", displayDay: "10日", icons: ["ClassVocal", "ClassDance", "ClassVisual"] },
+        { day: "S_11日", displayDay: "11日", icons: ["LessonVocal", "LessonDance", "LessonVisual"] },
+        { day: "S_12日", displayDay: "12日", icons: ["Consultation", "SpecialInstruction"] },
+        { day: "S_13日", displayDay: "13日", icons: ["Selection2"] },
+        { day: "S_14日", displayDay: "14日", icons: ["GoingOut", "Gifts"] },
+        { day: "S_15日", displayDay: "15日", icons: ["LessonVocal", "LessonDance", "LessonVisual"] },
+        { day: "S_16日", displayDay: "16日", icons: ["GoingOut", "Consultation", "Gifts"] },
+        { day: "S_17日", displayDay: "17日", icons: ["ClassVocal", "ClassDance", "ClassVisual"] },
+        { day: "S_18日", displayDay: "18日", icons: ["LessonVocal", "LessonDance", "LessonVisual"] },
+        { day: "S_19日", displayDay: "19日", icons: ["Consultation", "SpecialInstruction"] },
+        { day: "S_20日", displayDay: "20日", icons: ["Selection3"] },
     ];
     const mainBattlePhase = [
-        { day: "1日", icons: ["ClassVocal", "ClassDance", "ClassVisual"] },
-        { day: "2日", icons: ["LessonVocal", "LessonDance", "LessonVisual"] },
-        { day: "3日", icons: ["GoingOut", "Gifts"] },
-        { day: "4日", icons: ["ClassVocal", "ClassDance", "ClassVisual"] },
-        { day: "5日", icons: ["LessonVocal", "LessonDance", "LessonVisual"] },
-        { day: "6日", icons: ["Consultation"] },
+        { day: "M_1日", displayDay: "1日", icons: ["ClassVocal", "ClassDance", "ClassVisual"] },
+        { day: "M_2日", displayDay: "2日", icons: ["LessonVocal", "LessonDance", "LessonVisual"] },
+        { day: "M_3日", displayDay: "3日", icons: ["GoingOut", "Gifts"] },
+        { day: "M_4日", displayDay: "4日", icons: ["ClassVocal", "ClassDance", "ClassVisual"] },
+        { day: "M_5日", displayDay: "5日", icons: ["LessonVocal", "LessonDance", "LessonVisual"] },
+        { day: "M_6日", displayDay: "6日", icons: ["Consultation"] },
         // ★ 当日は横長画像3つ
-        { day: "当日", icons: ["Round1", "Interval", "Round2"] },
+        { day: "M_当日", displayDay: "当日", icons: ["Round1", "Interval", "Round2"] },
     ];
     const isWideRow = (day: string) => {
-        return ["7日", "13日", "20日", "当日"].includes(day);
+        return ["S_7日", "S_13日", "S_20日", "M_当日"].includes(day);
     };
 
     // =========================

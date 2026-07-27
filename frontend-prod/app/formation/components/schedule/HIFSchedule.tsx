@@ -2,6 +2,7 @@
 
 interface Row {
     day: string;
+    displayDay: string;
     icons: string[];
 }
 
@@ -36,7 +37,7 @@ export default function HIFSchedule({
                     <div key={idx} className="mb-3">
                         {isWideRow(row.day) ? (
                             <div className="flex items-center gap-3 w-full">
-                                <div className="w-17 font-bold text-xl">{row.day}</div>
+                                <div className="w-17 font-bold text-xl">{row.displayDay}</div>
                                 <img
                                     src={iconPath(row.icons[0])}
                                     className="flex-1 h-20 object-contain"
@@ -45,7 +46,7 @@ export default function HIFSchedule({
                             </div>
                         ) : (
                             <div className="flex items-center">
-                                <div className="w-17 font-bold text-xl">{row.day}</div>
+                                <div className="w-17 font-bold text-xl">{row.displayDay}</div>
 
                                 <div className="grid grid-cols-3 gap-3">
                                     {paddedIcons.map((icon, i) => {
@@ -106,7 +107,7 @@ export default function HIFSchedule({
                     <div key={idx} className="mb-3">
                         {isWideRow(row.day) ? (
                             <div className="flex items-start gap-3 w-full">
-                                <div className="w-17 font-bold text-xl">{row.day}</div>
+                                <div className="w-17 font-bold text-xl">{row.displayDay}</div>
 
                                 <div className="flex-1 flex flex-col gap-2">
                                     {row.icons.map((icon) => (
@@ -121,7 +122,7 @@ export default function HIFSchedule({
                             </div>
                         ) : (
                             <div className="flex items-center">
-                                <div className="w-17 font-bold text-xl">{row.day}</div>
+                                <div className="w-17 font-bold text-xl">{row.displayDay}</div>
 
                                 <div className="grid grid-cols-3 gap-3">
                                     {paddedIcons.map((icon, i) => {
