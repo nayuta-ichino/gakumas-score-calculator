@@ -17,10 +17,11 @@ import com.example.demo.entity.CardsEntity;
 import com.example.demo.service.CardsService;
 
 @RestController
-@CrossOrigin(origins = {
-    "http://localhost:3000",
-    "http://13.239.134.16:3000"
-})
+// @CrossOrigin(origins = {
+//     "http://localhost:3000",
+//     "http://13.239.134.16:3000"
+// })
+@CrossOrigin(originPatterns = "*", allowCredentials = "true") 
 
 public class CardsController {
     private final CardsService cardsService;

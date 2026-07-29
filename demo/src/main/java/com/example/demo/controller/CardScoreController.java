@@ -12,10 +12,11 @@ import com.example.demo.service.CardScoreService;
 import jakarta.validation.Valid;
 
 @RestController
-@CrossOrigin(origins = {
-    "http://localhost:3000",
-    "http://13.239.134.16:3000"
-})
+// @CrossOrigin(origins = {
+//     "http://localhost:3000",
+//     "http://13.239.134.16:3000"
+//})
+@CrossOrigin(originPatterns = "*", allowCredentials = "true") 
 
 public class CardScoreController {
     private final CardScoreService cardScoreService;
