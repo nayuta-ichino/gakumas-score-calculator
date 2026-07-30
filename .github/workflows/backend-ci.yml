@@ -1,0 +1,17 @@
+name: Backend CI
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'demo/**'
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      
+      - name: Run Test
+        run:  echo "ここでbackendのテストやビルドを実行"
