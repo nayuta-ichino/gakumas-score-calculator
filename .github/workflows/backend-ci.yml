@@ -20,7 +20,11 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: 'maven'
-    #3.Mavenを用いてビルドとテストを実行
+    #3.mvnwコマンドに実行権限を付与
+      - name: make mvnw executable
+        working-directory: demo
+        run: chmod +x mvnw
+    #4.Mavenを用いてビルドとテストを実行
       - name: Build with Maven
         working-directory: demo
         run: ./mvnw clean verify

@@ -14,4 +14,4 @@
 -- INSERT INTO card(name, rarity, type, base_score, score_per_limit_break)
 --     values('TEST3', 'SSR', 'Visial', 5, 2);
 -- INSERT INTO card(name, rarity, type, base_score, score_per_limit_break)
---     values('TEST4', 'SR', 'Visial', 6, 3);
+--     values('TEST4', 'SR', 'Visial', 6, 4);
