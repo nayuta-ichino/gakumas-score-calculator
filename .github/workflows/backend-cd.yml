@@ -36,7 +36,7 @@ jobs:
           ECR_REPOSITORY: backend-prod
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          cd demo
+          cd demo/docker/backend
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           # 次のステップ（タスク定義の更新）で使い回すために住所を出力しておく
