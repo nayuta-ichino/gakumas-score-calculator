@@ -47,4 +47,19 @@ jobs:
           aws ecs describe-task-definition \
             --task-definition gakumas-backend \
             --query taskDefinition > task-definition.json
-            
+      # 6. タスク定義内のイメージURLを、今回ビルドした最新のものに書き換え
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: render-task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: task-definition.json
+          container-name: backend-prod
+          image: ${{ steps.build-image.outputs.image }}
+      # 7. 新しいタスク定義を使って、ECSサービスをデプロイ
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+        with:
+          task-definition: ${{ steps.render-task-def.outputs.task-definition }}
+          service: gakumas-backend-service
+          cluster: gakumas-cluster
+          wait-for-service-stability: true
