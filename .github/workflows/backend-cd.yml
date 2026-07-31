@@ -1,0 +1,65 @@
+name: Backend CD
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'demo/**'
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on:  ubuntu-latest
+    steps:
+      #1.GithubからコードをDL
+      - name: Check out repository
+        uses: actions/checkout@v4
+      #2.OIDC 認証（OpenID Connect）
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::619796924515:role/GitHubActions-CD-Role
+          aws-region: ap-southeast-2
+      #3.ECRへログイン
+      - name: Log in to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+      #4.Dockerイメージをビルド & タグ付け & ECRへプッシュ
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: backend-prod
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          cd demo
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          # 次のステップ（タスク定義の更新）で使い回すために住所を出力しておく
+          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+      # 5. 現在のECSタスク定義ファイルをAWSから自動ダウンロード
+      - name: Download task definition
+        run: |
+          aws ecs describe-task-definition \
+            --task-definition gakumas-backend \
+            --query taskDefinition > task-definition.json
+      # 6. タスク定義内のイメージURLを、今回ビルドした最新のものに書き換え
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: render-task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: task-definition.json
+          container-name: backend-prod
+          image: ${{ steps.build-image.outputs.image }}
+      # 7. 新しいタスク定義を使って、ECSサービスをデプロイ
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+        with:
+          task-definition: ${{ steps.render-task-def.outputs.task-definition }}
+          service: gakumas-backend-service
+          cluster: gakumas-cluster
+          wait-for-service-stability: true
