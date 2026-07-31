@@ -41,3 +41,10 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           # 次のステップ（タスク定義の更新）で使い回すために住所を出力しておく
           echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+      #5.現在のECSタスク定義ファイルをAWSから自動ダウンロード
+      - name: Download task definition
+        run: |
+          aws ecs describe-task-definition \
+            --task-definition backend-prod-task \
+            --query taskDefinition > task-definition.json
+            
