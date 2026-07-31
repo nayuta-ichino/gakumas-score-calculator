@@ -34,11 +34,16 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
+
+      - name: Convert mvnw to LF
+        run: sed -i 's/\r$//' demo/mvnw
+      
       - name: Make mvnw executable
         run: chmod +x demo/mvnw
+      
       - name: Build with Maven
         run: |
-          cd demo \
+          cd demo
           ./mvnw clean package -DskipTests
       #4.Dockerイメージをビルド & タグ付け & ECRへプッシュ
       - name: Build, tag, and push image to Amazon ECR
